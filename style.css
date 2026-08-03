@@ -1,0 +1,415 @@
+.background {
+    background-image: url(Image/Camp\ night.jpg);
+    background-position-x: 30%;
+    background-position-y: 0%;
+
+}
+/* Style untuk header */    
+body {
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+    header { 
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        margin-left: 0px;
+        padding-left: 0px;
+        
+    }
+    .navigasi {
+        color: aliceblue;
+        display: flex;
+        justify-content:space-between;
+        background-position: center;
+        background-color: rgb(2, 3, 48);
+        padding: 0px;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+        border-radius: 1px;
+        height: 90px;
+    }
+    .navigasi ul { color: aliceblue;
+        display: flex;
+        list-style: none;
+        align-items: center;
+        font-size: 20px;
+        gap: 30px;
+        margin: 30px;
+        padding-right: 30px;
+    }
+
+    .navigasi a,
+    .navigasi a:visited,
+    .navigasi a:active {
+        text-decoration: none;
+        color: rgb(255, 255, 255);
+    }
+    .navigasi a:hover {color: rgb(193, 189, 0)}
+
+    .navigasi a {
+        padding-bottom: 5px;
+        border-bottom: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .menu.active {
+        color: rgb(255, 255, 255);
+        border-bottom: 2px solid rgb(255, 255, 255);
+    }
+
+    .peta {
+        background-color: rgb(3, 91, 146);
+        color:white;
+        padding: 5px;
+        border-radius: 8px;
+        text-decoration: none;
+    }
+
+    .deskripsi{
+        font-family: "Wire One", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 20px ;
+        letter-spacing: 2.8px;
+        border-left: 1px solid;
+        padding-left: 10px;
+        line-height: 45px;
+    }
+
+    .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-left: 20px;
+    }
+
+    .logo {
+        margin-right: 10px;
+        height: 60px;
+        width: 140px;
+        padding-top: 10px;
+    }
+
+    .logo-title {
+        height: 100px;
+    }
+
+/* STYLE HOME PAGE */   
+    .konten {
+        /* background-color: rgb(27, 0, 69); */
+        color: aliceblue;
+        padding-bottom: 20px;
+        margin-top: 0px;
+
+    }
+    
+    /* .judul {
+        font-family: "Quantico", sans-serif;
+        font-weight: 500;
+        font-style: normal;
+        font-size: 60px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+        padding-left: 50px;
+    } */
+
+    #tagline {
+        font-size: 60px;
+        width: 40%;
+        padding-top: 20px;
+        padding-left: 50px;
+        margin-top: 0px;
+    }
+
+    #deskripsi-project {
+        text-align: justify;
+        font-size: 20px;
+        width: 55%;
+        padding-left: 50px;
+        padding-right: 20px;
+    }
+
+    .keterangan ul{
+        list-style: none;
+        text-align: center;
+        justify-content: left;
+        display: flex;
+        gap: 30px;
+        text-align: center;
+        margin-left: 50px;
+        margin-right: 40%;
+        padding-top: 20px;
+    }
+    
+    .keterangan a,
+    .keterangan a:visited,
+    .keterangan a:active{
+        color: white;
+        text-decoration: none;
+    }
+
+    .konten a:hover{
+        color: rgb(193, 189, 0);
+    }
+    .why {
+        /* background-color: rgb(40, 31, 123); */
+        color: aliceblue;
+        padding: 0px;
+        margin-bottom: 0px;
+        text-align: center;
+    }
+
+    .why h1{
+        padding-top: 20px;
+        margin-top: 0px;
+    }
+    .why ul{
+        list-style: none;
+        text-align: center;
+        justify-content: center;
+        display: flex;
+        gap: 30px;
+        padding-bottom: 20px;
+        margin-left: 50px;
+        margin-right: 50px;
+        margin-bottom: 0px;
+    }
+
+    .list {
+        background-color: transparent;
+        color: white;
+        border: 0px;
+    }
+    
+    .why li{
+        font-size: 20px;
+        width: 200px;
+        padding: 50px;
+        margin-bottom: 0px;
+        border: 1px solid rgb(255, 255, 255);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .why li:hover {
+        background-color: rgb(193, 189, 0) ;
+    }
+
+    .tombol-lokasi {
+        display: flex;
+        padding: 10px;
+        justify-content: center;
+        /* background-color:  rgb(40, 31, 123); */
+`   }
+
+    .hasil-konten {
+        
+        margin: 0px;
+        color: white;
+        /* background-color:  rgb(40, 31, 123); */
+    }
+    .hasil-api {
+        border: 1px solid;
+        padding-top: 0px;
+        padding-left: 50px;
+        padding-bottom: 0px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        background-color: antiquewhite;
+    }
+
+
+
+
+
+/* STYLE ABOUT PAGE */
+
+    .about {
+        color: aliceblue;
+        font-size: 50px;
+        background-image: url("Image/About\ me\ background.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        height: 36vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .nama {
+        padding-left: 20px;
+    }
+
+    .keterangan {
+        padding-left: 20px;
+    }
+
+    .foto-profil {
+        display: flex;
+        height: 250px;
+        width: 250px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 20px;
+    }
+
+    .identitas {
+        color: aliceblue;
+        background-color: rgb(3, 9, 72);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0px;
+        padding-top: 30px;
+        padding-bottom: 20px;
+        margin-top: 0px;
+    }
+    
+    .nama {
+        margin: 0px;
+        padding: 0px;
+        font-size: 40px;
+    }
+    .keterangan {
+        margin: 0px;
+        padding: 0px;
+        font-size: 20px;
+
+    }
+
+    .latar-belakang {
+        padding-left: 30px;
+        width: 70%;
+        text-align: justify;
+        font-size: 20px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+
+    .pengalaman {
+        padding-top: 0px;
+        margin-left: 30px;
+        margin-top: 0px;
+    }
+    
+    .pengalaman h2{
+        font-size: 30px;
+    }
+
+    .pengalaman table{
+        width: 70%;
+        margin-top: 15px;
+        padding-bottom: 20px;
+    }
+
+    .pengalaman th {
+        font-size: 18px;
+        padding: 10px;
+        text-align: center;
+    }
+    .proyek {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+
+    .pengalaman th {
+        border: 1px solid #ddd;
+        background-color: rgb(2, 3, 48);
+        color: white;
+        }
+
+    .pengalaman tr:hover{
+        background-color: #e8f4ff;
+    }
+
+    .tahun {
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+    .utama {
+        background-color: #ffffff;
+        padding-bottom: 10px;
+    }
+
+    .kontak {
+        padding-top: 0px;
+        padding-left: 30px;
+        margin: 0px;
+        padding-bottom: 20px;
+    }
+    .kontak h3 {
+        font-size: 25px;
+    }
+
+    .kontak-item{
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 18px;
+    }
+
+    .kontak-icon{
+        width: 28px;
+        height: 28px;
+    }
+
+    .kontak-item a{
+        text-decoration: none;
+        color: #222;
+        font-size: 18px;
+    }
+
+    .kontak-item a:hover{
+        color: #2DBA8C;
+    }
+
+
+    .comment{
+    width: 40%;
+    height: 30%;
+    margin: 0px;
+    padding-left: 30px;
+    padding-bottom: 20px;
+    }
+
+/* STYLE MAP PAGE */
+
+.map h2 {
+    padding-left: 30px;
+    color: white;
+}
+
+/* STYLE FOOTER */
+    .footer{
+    background-color: rgb(2, 3, 48);
+    color: white;
+    text-align: center;
+    margin: 0px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    font-size: 15px;
+    }
+
+    .footer-logo{
+        width: 90px;
+        margin: 0px;
+        padding-bottom: 0px;
+    }
+   
+    .footer p{
+        margin: 0px;
+    }
+    .footer-quote {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
