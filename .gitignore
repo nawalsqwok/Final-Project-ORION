@@ -1,0 +1,32 @@
+# Dependency Node.js
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.*
+!.env.example
+
+# Log files
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Build folder
+dist/
+build/
+
+# Coverage
+coverage/
+
+.vite/
