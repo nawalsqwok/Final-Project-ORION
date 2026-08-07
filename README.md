@@ -106,6 +106,7 @@ Tahapan analisis pada ORION meliputi:
 ## WebGIS
 
 - Leaflet.js
+- Maplibre
 - GeoJSON
 
 ## Pengolahan Data
