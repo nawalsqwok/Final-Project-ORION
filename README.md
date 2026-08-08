@@ -3,7 +3,8 @@
 
 ORION (Observation & Regional Intelligence for Optimized Night-tourism) merupakan platform WebGIS berbasis **Spatial Decision Support System (SDSS)** yang dikembangkan untuk mengidentifikasi kawasan **dark sky** potensial serta memberikan rekomendasi lokasi dan periode terbaik untuk observasi langit malam dan pengembangan astrowisata di Provinsi Jawa Barat.
 
----
+ORION mengintegrasikan informasi kualitas langit malam, kondisi tutupan awan historis, dan aksesibilitas wilayah untuk menghasilkan ORION Score serta rekomendasi lokasi dan periode observasi langit malam yang potensial.
+
 
 # 📌 Latar Belakang
 
@@ -13,7 +14,7 @@ Meskipun telah tersedia platform seperti **Light Pollution Map**, informasi yang
 
 Melalui ORION, berbagai data spasial diintegrasikan menjadi sebuah sistem rekomendasi yang dapat membantu wisatawan, pengelola wisata, maupun pemerintah daerah dalam mengidentifikasi kawasan yang berpotensi dikembangkan sebagai destinasi astrowisata.
 
----
+
 
 # 🎯 Tujuan Project
 
@@ -23,9 +24,8 @@ Project ini bertujuan untuk:
 - Menghasilkan skor ORION sebagai indikator potensi astrowisata.
 - Memberikan rekomendasi lokasi observasi langit malam.
 - Menentukan periode observasi terbaik berdasarkan data historis tutupan awan.
-- Mendukung pengembangan kawasan astrowisata berbasis data spasial.
+- Menyajikan hasil analisis melalui WebGIS yang interaktif dan mudah dipahami
 
----
 
 # 👥 Target Pengguna
 
@@ -47,7 +47,6 @@ Project ini bertujuan untuk:
 - Batas desa/kelurahan
 - Jaringan jalan
 - Destinasi wisata
-- Data elevasi (DEM)
 - VIIRS Day/Night Band (Night Light)
 - Tutupan awan historis
 
@@ -70,7 +69,7 @@ Tahapan analisis pada ORION meliputi:
 4. Analisis aksesibilitas berdasarkan jaringan jalan dan destinasi wisata.
 5. Perhitungan Visibility Score.
 6. Perhitungan Accessibility Score.
-7. Penggabungan seluruh parameter menggunakan metode **Multi Criteria Decision Analysis (MCDA)**.
+7. Penggabungan seluruh parameter menggunakan pendekatan **Multi Criteria Decision Analysis (MCDA)** melalui metode weighted scoring
 8. Menghasilkan **ORION Score**.
 9. Melakukan **Zonal Statistics** untuk memperoleh skor rata-rata pada tingkat kecamatan dan desa.
 10. Menampilkan hasil analisis dalam bentuk WebGIS.
@@ -105,7 +104,6 @@ Tahapan analisis pada ORION meliputi:
 
 ## WebGIS
 
-- Leaflet.js
 - Maplibre
 - GeoJSON
 
@@ -121,6 +119,7 @@ Tahapan analisis pada ORION meliputi:
 
 ### Tahap 1
 - Penyusunan konsep project
+- Membuat repository GitHub
 - Desain UI/UX
 - Persiapan data
 
