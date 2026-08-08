@@ -36,7 +36,6 @@ Project ini bertujuan untuk:
 - Pemerintah daerah
 - Peneliti dan akademisi
 
----
 
 # 🗺️ Data yang Digunakan
 
@@ -57,7 +56,6 @@ Project ini bertujuan untuk:
 - Accessibility Score
 - ORION Score
 
----
 
 # ⚙️ Metodologi
 
@@ -74,7 +72,6 @@ Tahapan analisis pada ORION meliputi:
 9. Melakukan **Zonal Statistics** untuk memperoleh skor rata-rata pada tingkat kecamatan dan desa.
 10. Menampilkan hasil analisis dalam bentuk WebGIS.
 
----
 
 # ✨ Fitur WebGIS
 
@@ -92,7 +89,6 @@ Tahapan analisis pada ORION meliputi:
 - Desa/Kelurahan Prioritas Pengembangan Astrowisata
 - Ranking Kecamatan Potensial
 
----
 
 # 💻 Teknologi yang Digunakan
 
@@ -113,7 +109,6 @@ Tahapan analisis pada ORION meliputi:
 - ArcGIS Pro
 - Google Earth Engine
 
----
 
 # 🛣️ Roadmap Pengembangan
 
