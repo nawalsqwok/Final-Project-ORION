@@ -1,14 +1,15 @@
 {
   "name": "final-project-orion",
   "version": "1.0.0",
-  "main": "Index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [],
-  "author": "",
+  "author": "Nawal Syafiq Farihan",
   "license": "ISC",
-  "description": "",
+  "description": "ORION (Observation & Regional Intelligence for Optimized Night-tourism) merupakan platform WebGIS berbasis **Spatial Decision Support System (SDSS)** yang dikembangkan untuk mengidentifikasi kawasan **dark sky** potensial serta memberikan rekomendasi lokasi dan periode terbaik untuk observasi langit malam dan pengembangan astrowisata di Provinsi Jawa Barat.",
   "dependencies": {
     "leaflet": "^1.9.4"
   },

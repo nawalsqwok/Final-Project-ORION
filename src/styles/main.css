@@ -1,5 +1,5 @@
 .background {
-    background-image: url(Image/Camp\ night.jpg);
+    background-image: url(public/images/Camp\ night.jpg);
     background-position-x: 30%;
     background-position-y: 0%;
 
@@ -202,14 +202,14 @@ body {
         padding: 10px;
         justify-content: center;
         /* background-color:  rgb(40, 31, 123); */
-`   }
-
+    }
     .hasil-konten {
         
         margin: 0px;
         color: white;
         /* background-color:  rgb(40, 31, 123); */
     }
+
     .hasil-api {
         border: 1px solid;
         padding-top: 0px;
@@ -229,7 +229,7 @@ body {
     .about {
         color: aliceblue;
         font-size: 50px;
-        background-image: url("Image/About\ me\ background.png");
+        background-image: url("/images/About me background.png");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
