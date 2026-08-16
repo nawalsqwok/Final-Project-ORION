@@ -11,7 +11,8 @@
   "license": "ISC",
   "description": "ORION (Observation & Regional Intelligence for Optimized Night-tourism) merupakan platform WebGIS berbasis **Spatial Decision Support System (SDSS)** yang dikembangkan untuk mengidentifikasi kawasan **dark sky** potensial serta memberikan rekomendasi lokasi dan periode terbaik untuk observasi langit malam dan pengembangan astrowisata di Provinsi Jawa Barat.",
   "dependencies": {
-    "leaflet": "^1.9.4"
+    "leaflet": "^1.9.4",
+    "maplibre-gl": "^6.4.0"
   },
   "devDependencies": {
     "vite": "^8.2.0"
