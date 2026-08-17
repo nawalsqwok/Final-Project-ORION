@@ -15,79 +15,177 @@
             <script type="module" src="/src/pages/home.js"></script>
         </head>
 
-    <!-- ini untuk headernya -->
-     <body class="background">
-        <header>
-            <nav class="navigasi">
-                <div class="logo-section">
-                    <a href="index.html">
-                    <img src="/images/Logo Orion.png" width="200" height="90" class="logo">
-                    </a>
-                    <p class="deskripsi">Dark Sky & Astrotourism Intelligence Platform</p>
-                </div>
+    
+    <body>
 
-                    <ul>
-                        <li><a href="index.html" class="menu active">Home</a></li>
-                        <li><a href="about.html" class="menu">About</a></li>
-                        <li><a href="map.html" class="peta">Explore Map</a></li>
-                    </ul>
+<!-- Header -->
+
+        <header class="site-header">
+            <nav class="site-navigation" aria-label="Navigasi Utama">
+                <a
+                href="/index.html"
+                class="brand-link"
+                aria-label="Kembali ke halaman Home ORION"
+                >
+                    <img
+                        src="/images/Logo Orion.png"
+                        class="brand-logo"
+                        alt="Logo ORION"
+                    >
+                </a>
+                <div class="navigation-links">
+                    <a
+                        href="/index.html"
+                        class="navigation-link"
+                        aria-current="page"
+                    >
+                    Home
+                    </a>
+
+                    <a
+                        href="/about.html"
+                        class="navigation-link">
+                    About Me
+                    </a>
+
+
+                    <a
+                        href="/map.html
+                        class="navigation-link"
+                    >
+                    Explore Map
+                    </a>
+                </div>
             </nav>
         </header>
 
-        <main>
-            <div class="konten">
-                <!-- <h1 class="judul">ORION</h1>  -->
-                 <!-- h1 sementara dinonaktifkan dulu -->
-                    <p class="sub-judul" id="tagline">Explore Where and When the Night Sky Shines Best!</p>
-                    <p class="sub-judul" id="deskripsi-project">Platform berbasis WebGIS yang memberikan rekomendasi lokasi dan waktu terbaik untuk observasi langit malam
-                        serta mendukung pengambilan keputusan dalam pengembangan <i><b>astrotourism</b></i> di Jawa Barat melalui analisis data spasial dan
-                        kondisi lingkungan.</p>
-                    <div class="keterangan">
-                        <ul>
-                            <li><a href="map.html">Explore Map</a></li>
-                            <li><a>Learn More</a></li>
-                        </ul>
-                    </div>
+ <!-- Main Content -->
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <p class="hero-eyebrow">
+                    Dark Sky & Astrotourism Intelligence Platform
+                </p>
+
+                <h1 class="hero-title"> 
+                    Where and When the Night Sky Shines Best!
+                </h1>
+
+                <p class="hero-description">
+                    Platform berbasis WebGIS yang memberikan rekomendasi lokasi dan waktu terbaik untuk observasi langit malam
+                    serta mendukung pengambilan keputusan dalam pengembangan Astrotourism di Jawa Barat melalui analisis data spasial dan
+                    kondisi lingkungan.
+                </p>
+
+                <a href="/map.html" class="hero-cta">
+                    Explore Map
+                </a>     
+            </div>
+        </section>
+
+        <section class="intro-section">
+
+            <div class="section-container">
+
+                <p class="section-eyebrow">
+                    Tentang ORION
+                </p>
+
+                <h2>
+                    Eksplorasi langit malam berbasis data
+                </h2>
+
+                <p class="section-description">
+                    ORION merupakan platform WebGIS berbasis Spatial Decision
+                    Support System yang mengintegrasikan kualitas langit malam,
+                    tutupan awan, dan aksesibilitas untuk membantu mengidentifikasi
+                    wilayah yang berpotensi mendukung kegiatan astrowisata.
+                </p>
+
             </div>
 
-            <div class="why">
-                <h1>Mengapa ORION?</h1>
-                    <ul>
-                        <div>
-                            <button class="list" id="langit-malam"> <li>Kualitas Langit Malam</li> </button>
-                            <button class="list" id="aksesibilitas"> <li>Aksesibilitas</li> </button>
-                            <button class="list" id="skor-orion"> <li>Skor ORION</li> </button>
-                        </div>
+        </section>
 
-                    </ul>
-            </div>
-            <div class="hasil-konten">
-                <div class="konten-langit-malam"></div>
-                <div class="konten-aksesibilitas"></div>
-                <div class="konten-skor-orion"></div>
-            </div>
+        <!-- Fitur utama -->
+        <section class="features-section">
 
-                <div class="tombol-lokasi">
-                    <button class="lokasi-wisata">Tampilkan Informasi Lokasi Wisata</button>
+            <div class="section-container">
+
+                <p class="section-eyebrow">
+                    Fitur Utama
+                </p>
+
+                <h2>
+                    Jelajahi ORION
+                </h2>
+
+                <div class="features-grid">
+
+                    <article class="feature-card">
+
+                        <h3>
+                            ORION Score
+                        </h3>
+
+                        <p>
+                            Melihat tingkat potensi relatif setiap kecamatan
+                            berdasarkan kombinasi beberapa parameter.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card">
+
+                        <h3>
+                            NSB Heatmap
+                        </h3>
+
+                        <p>
+                            Mengeksplorasi pola kecerahan langit malam
+                            secara spasial.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card">
+
+                        <h3>
+                            Rekomendasi Wilayah
+                        </h3>
+
+                        <p>
+                            Menemukan wilayah yang memiliki potensi lebih tinggi
+                            untuk pengembangan observasi langit malam dan astrowisata.
+                        </p>
+
+                    </article>
+
                 </div>
-                <div class="hasil-api"><div>     
 
-            
-        </main>
+            </div>
 
+        </section>
+    </main>
 
-        <footer class="footer">
+    <footer class="site-footer">
 
-            <img src="/images/Logo Orion.png" class="footer-logo">
+        <div class="footer-content">
 
-            <p>Dark Sky and Astrotourism Intelligence Platform</p>
+            <img src="/images/Logo Orion.png" alt="Logo ORION" class="footer-logo">
 
-            <p class="footer-quote">
-            Explore the beauty of West Java's night sky with ORION.
+            <p class="footer-tagline">
+                Dark Sky and Astrotourism Intelligence Platform
             </p>
 
-            <p class="copyright">©2026 ORION. All Rights Reserved.</p>
+        <p class="footer-description">
+            Explore the potential of West Java's night sky with ORION.
+        </p>
 
-        </footer>
-    </body>
+        <p class="copyright">©2026 ORION. All Rights Reserved.</p>
+
+    </footer>
+</body>
 </html>
