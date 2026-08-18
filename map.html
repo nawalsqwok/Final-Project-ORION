@@ -11,27 +11,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Wire+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
-    <!-- INI UNTUK HEADERNYA -->
-
-        <header>
-            <nav class="navigasi">
-                <div class="logo-section">
-                    <a href="Index.html">
-                    <img src="image/Logo Orion.png" width="200" height="90" class="logo">
-                    </a>
-                    <p class="deskripsi">Dark Sky and Astrotourism Intelligence Platform</p>
-                </div>
-
-                    <ul>
-                        <li><a href="Index.html">Home</a></li>
-                        <li><a href="About.html">About</a></li>
-                        <li><a href="Map.html" class="peta">Explore Map</a></li>
-                    </ul>
-            </nav>
-        </header>   
+    <script
+        type="module"
+        src="/src/pages/map.js">
+    </script>
 </head>
 
-<body class="background">
+<body>
+<!-- INI UNTUK HEADERNYA -->
+
+    <header class="site-header">
+        <nav
+            class="site-navigation"
+            aria-label="Navigasi utama">
+
+            <a
+            href="/index.html"
+            class="brand-link"
+            aria-label="Kembali ke halaman Home ORION">
+
+            <img
+                src="/images/logo-orion.png"
+                class="brand-logo"
+                alt="Logo ORION">
+            </a>
+
+            <div class="navigation-links">
+                
+                <a
+                    href="Index.html"
+                    class="navigation-link">
+
+                    Home
+                </a>
+
+                <a
+                    href="/about.html"
+                    class="navigation-link"
+                    aria-current="page"
+                >
+                    About Me
+                </a>
+
+                <a
+                    href="/map.html"
+                    class="navigation-link"
+                    aria-current="page"
+                >
+                    Explore Map
+                </a>
+            </div>
+        </nav>
+
 
 <section class="map">
     <h2>Explore West Java</h2>
