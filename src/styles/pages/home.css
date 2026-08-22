@@ -1,0 +1,48 @@
+.hero-section {
+    min-height: calc(100vh - 72px);
+
+    display: flex;
+    align-items: center;
+}
+
+.hero-content {
+    width: min(100% - 40px, 900px);
+    margin: 0 auto;
+    padding: 80px 0;
+}
+
+.hero-eyebrow {
+    margin-bottom: 20px;
+
+    color: var(--color-primary-light);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.hero-title {
+    max-width: 850px;
+    margin-bottom: 24px;
+
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    line-height: 1.05;
+}
+
+.hero-description {
+    max-width: 700px;
+    color: var(--color-text-muted);
+}
+
+.hero-cta {
+    display: inline-block;
+    margin-top: 32px;
+    padding: 12px 22px;
+
+    border-radius: var(--radius-sm);
+
+    background-color: var(--color-primary);
+    color: #111;
+
+    font-weight: 700;
+}
