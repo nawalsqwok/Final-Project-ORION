@@ -1,3 +1,5 @@
+console.log("MAP.JS BERHASIL DIJALANKAN");
+
 import {
     Map,
     NavigationControl,
@@ -7,6 +9,8 @@ import {
 import "maplibre-gl/dist/maplibre-gl.css";
 
 import { getOrionDistricts } from "../api/orion-data.js";
+
+console.log("MapLibre:", Map);
 
 
 const MAP_CONTAINER_ID = "map";
@@ -18,7 +22,7 @@ const ORION_LINE_LAYER_ID = "orion-district-line";
 
 
 const map = new Map({
-    container: MAP_CONTAINER_ID,
+    container: "map",
 
     center: [107.6, -6.9],
     zoom: 9,
