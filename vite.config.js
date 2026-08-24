@@ -5,6 +5,9 @@ const entry = (file)=>
     fileURLToPath(new URL(file, import.meta.url));
 
 export default defineConfig({
+    optimizeDeps: {
+        exclude: ["maplibre-gl"],
+    },
     build: {
         rollupOptions: {
             input: {

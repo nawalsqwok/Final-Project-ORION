@@ -1,16 +1,17 @@
-console.log("MAP.JS BERHASIL DIJALANKAN");
-
 import {
     Map,
     NavigationControl,
-    Popup,
+    setWorkerUrl,
 } from "maplibre-gl";
 
+import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import "maplibre-gl/dist/maplibre-gl.css";
 
 import { getOrionDistricts } from "../api/orion-data.js";
+import { createLocationPopup } from "../components/location-popup.js";
+import { initializeLayerControl } from "../components/layer-control.js";
 
-console.log("MapLibre:", Map);
+setWorkerUrl(workerUrl);
 
 
 const MAP_CONTAINER_ID = "map";
@@ -38,7 +39,7 @@ const map = new Map({
                 ],
                 tileSize: 256,
                 attribution:
-                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                    '&copy; OpenStreetMap contributors',
             },
         },
 
@@ -125,82 +126,14 @@ map.on("load", async () => {
                 return;
             }
 
-
-            const properties = feature.properties;
-
-
-            const districtName =
-                properties.WADMKC ?? "Tidak diketahui";
-
-
-            const regencyName =
-                properties.WADMKK ?? "Tidak diketahui";
-
-
-            const orionScore =
-                properties.ORION_SCORE ?? "-";
-
-
-            const nsbScore =
-                properties.NSB_SCORE ?? "-";
-
-
-            const cloudScore =
-                properties.CLOUD_SCORE ?? "-";
-
-
-            const accessScore =
-                properties.ACCESS_SCORE ?? "-";
-
-
-            new Popup()
-                .setLngLat(event.lngLat)
-                .setHTML(`
-                    <div class="map-popup">
-
-                        <p class="popup-label">
-                            Kecamatan
-                        </p>
-
-                        <h3 class="popup-title">
-                            ${districtName}
-                        </h3>
-
-                        <p class="popup-location">
-                            ${regencyName}
-                        </p>
-
-                        <div class="popup-score">
-                            <span>ORION Score</span>
-
-                            <strong>
-                                ${Number(orionScore).toFixed(2)}
-                            </strong>
-                        </div>
-
-                        <div class="popup-metrics">
-
-                            <div>
-                                <span>NSB</span>
-                                <strong>${nsbScore}</strong>
-                            </div>
-
-                            <div>
-                                <span>Cloud</span>
-                                <strong>${cloudScore}</strong>
-                            </div>
-
-                            <div>
-                                <span>Access</span>
-                                <strong>${accessScore}</strong>
-                            </div>
-
-                        </div>
-
-                    </div>
-                `)
-                .addTo(map);
-        });
+            const popup = createLocationPopup(
+                event,
+                feature.properties
+            );
+            
+            popup.addTo(map);        
+        }
+    );
 
 
         map.on("mouseenter", ORION_FILL_LAYER_ID, () => {
@@ -212,6 +145,13 @@ map.on("load", async () => {
             map.getCanvas().style.cursor = "";
         });
 
+        initializeLayerControl(map);
+
+        initializeLocationSearch(
+            map,
+            geojson
+        );
+
     } catch (error) {
         console.error(
             "Gagal menginisialisasi data ORION:",
@@ -219,3 +159,171 @@ map.on("load", async () => {
         );
     }
 });
+
+function initializeLocationSearch(
+    map,
+    geojson
+) {
+    const searchInput =
+        document.getElementById(
+            "location-search"
+        );
+
+    if (!searchInput) {
+        return;
+    }
+
+    searchInput.addEventListener(
+        "change",
+        () => {
+            const query =
+                searchInput.value
+                    .trim()
+                    .toLowerCase();
+
+            if (!query) {
+                return;
+            }
+
+            const feature =
+                geojson.features.find(
+                    (item) => {
+                        const districtName =
+                            String(
+                                item.properties
+                                    ?.WADMKC ?? ""
+                            ).toLowerCase();
+
+                        const regencyName =
+                            String(
+                                item.properties
+                                    ?.WADMKK ?? ""
+                            ).toLowerCase();
+
+                        return (
+                            districtName.includes(query) ||
+                            regencyName.includes(query)
+                        );
+                    }
+                );
+
+
+            if (!feature) {
+                return;
+            }
+
+
+            const coordinates =
+                getFeatureCenter(feature);
+
+            map.flyTo({
+                center: coordinates,
+                zoom: 12,
+                essential: true,
+            });
+        }
+    );
+}
+
+
+function getFeatureCenter(feature) {
+    const coordinates = [];
+
+    collectCoordinates(
+        feature.geometry,
+        coordinates
+    );
+
+    if (!coordinates.length) {
+        return [107.6, -6.9];
+    }
+
+
+    let minLongitude = Infinity;
+    let maxLongitude = -Infinity;
+
+    let minLatitude = Infinity;
+    let maxLatitude = -Infinity;
+
+
+    coordinates.forEach(
+        ([longitude, latitude]) => {
+            minLongitude =
+                Math.min(
+                    minLongitude,
+                    longitude
+                );
+
+            maxLongitude =
+                Math.max(
+                    maxLongitude,
+                    longitude
+                );
+
+            minLatitude =
+                Math.min(
+                    minLatitude,
+                    latitude
+                );
+
+            maxLatitude =
+                Math.max(
+                    maxLatitude,
+                    latitude
+                );
+        }
+    );
+
+
+    return [
+        (minLongitude + maxLongitude) / 2,
+        (minLatitude + maxLatitude) / 2,
+    ];
+}
+
+
+function collectCoordinates(
+    geometry,
+    output
+) {
+    if (
+        geometry.type ===
+        "Polygon"
+    ) {
+        geometry.coordinates.forEach(
+            (ring) => {
+                ring.forEach(
+                    (coordinate) => {
+                        output.push(
+                            coordinate
+                        );
+                    }
+                );
+            }
+        );
+
+        return;
+    }
+
+
+    if (
+        geometry.type ===
+        "MultiPolygon"
+    ) {
+        geometry.coordinates.forEach(
+            (polygon) => {
+                polygon.forEach(
+                    (ring) => {
+                        ring.forEach(
+                            (coordinate) => {
+                                output.push(
+                                    coordinate
+                                );
+                            }
+                        );
+                    }
+                );
+            }
+        );
+    }
+}
