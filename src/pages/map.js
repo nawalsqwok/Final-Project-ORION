@@ -51,6 +51,8 @@ const map = new Map({
     },
 });
 
+window.orionMap = map;
+
 map.addControl(
     new NavigationControl(),
     "top-right"
