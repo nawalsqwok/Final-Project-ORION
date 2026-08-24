@@ -1,17 +1,13 @@
 import {
     Map,
     NavigationControl,
-    setWorkerUrl,
 } from "maplibre-gl";
 
-import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import "maplibre-gl/dist/maplibre-gl.css";
 
 import { getOrionDistricts } from "../api/orion-data.js";
 import { createLocationPopup } from "../components/location-popup.js";
 import { initializeLayerControl } from "../components/layer-control.js";
-
-setWorkerUrl(workerUrl);
 
 
 const MAP_CONTAINER_ID = "map";
@@ -20,6 +16,8 @@ const GEOJSON_SOURCE_ID = "orion-districts";
 
 const ORION_FILL_LAYER_ID = "orion-district-fill";
 const ORION_LINE_LAYER_ID = "orion-district-line";
+const NSB_IMAGE_SOURCE_ID = "nsb-image";
+const NSB_RASTER_LAYER_ID = "nsb-raster";
 
 
 const map = new Map({
@@ -28,7 +26,7 @@ const map = new Map({
     center: [107.6, -6.9],
     zoom: 9,
 
-    style: {
+    style: { 
         version: 8,
 
         sources: {
@@ -117,6 +115,42 @@ map.on("load", async () => {
                 "line-opacity": 0.5,
             },
         });
+
+        map.addSource(NSB_IMAGE_SOURCE_ID, {
+
+            type: "image",
+            url: "/data/rasters/orion-nsb-bandung-raya-2024.png",
+            
+            coordinates: [
+            
+            [107.1788867, -6.6874825],
+            
+            [107.9413847, -6.6874825],
+            
+            [107.9413847, -7.3124809],
+            
+            [107.1788867, -7.3124809]
+            
+            ]
+            
+            });
+
+
+            map.addLayer({
+
+                id: NSB_RASTER_LAYER_ID,
+                
+                type: "raster",
+                
+                source: NSB_IMAGE_SOURCE_ID,
+                
+                paint: {
+                
+                "raster-opacity": 0.6
+                
+                }
+                
+                });
 
 
         map.on(
