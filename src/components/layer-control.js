@@ -5,12 +5,14 @@ const LAYER_CONFIG = [
             "orion-district-fill",
             "orion-district-line",
         ],
+        legendId: "orion-legend"
     },
     {
         inputId: "nsb-layer",
         layerIds: [
             "nsb-raster",
         ],
+        legendId: "nsb-legend",
     },
     {
         inputId: "cloud-layer",
@@ -40,7 +42,8 @@ export function initializeLayerControl(map) {
             return;
         }
 
-        input.addEventListener("change", () => {
+        input.addEventListener(
+            "change", () => {
             const visibility = input.checked ? "visible" : "none";
 
             config.layerIds.forEach((layerId) => {
@@ -54,6 +57,49 @@ export function initializeLayerControl(map) {
                     visibility
                 );
             });
-        });
-    });
+
+            updateLegend(
+                config.inputId,
+                input.checked
+            );
+        }
+    );
+});
+}
+
+function updateLegend(
+    inputId,
+    isChecked
+) {
+    const orionLegend =
+        document.getElementById(
+            "orion-legend"
+        );
+
+    const nsbLegend =
+        document.getElementById(
+            "nsb-legend"
+        );
+
+    if (!orionLegend || !nsbLegend) {
+        return;
+    }
+
+    if (
+        inputId === "nsb-layer" &&
+        isChecked
+    ) {
+        orionLegend.hidden = true;
+        nsbLegend.hidden = false;
+
+        return;
+    }
+
+    if (
+        inputId === "nsb-layer" &&
+        !isChecked
+    ) {
+        orionLegend.hidden = false;
+        nsbLegend.hidden = true;
+    }
 }

@@ -175,44 +175,52 @@
 
             <!-- legenda petanya -->
 
-            <aside class="map-legend" aria-label="Legenda">
+                        <aside
+                class="map-legend"
+                aria-label="Legenda peta"
+            >
 
-                <h2 class="control-title">
-                    ORION Score
-                </h2>
+                <!-- Legend ORION Score -->
+                <div
+                    id="orion-legend"
+                    class="legend-content"
+                >
+                    <h2 class="control-title">
+                        ORION Score
+                    </h2>
 
-                <div class="legend-scale">
-                    <div class="legend-item">
-                        <span class="legend-swatch">
-                        </span>
+                    <div class="legend-scale">
 
-                        <span> Rendah</span>
+                        <div class="legend-gradient orion-gradient"></div>
 
-                    </div>
+                        <div class="legend-range">
+                            <span>Rendah</span>
+                            <span>Tinggi</span>
+                        </div>
 
-                    <div class="legend-item">
-                        <span class="legend-swatch">
-                        </span>
-
-                        <span>Sedang</span>
-                    </div>
-
-                    <div class="legend-item">
-
-                        <span class="legend-swatch">
-                        </span>
-
-                        <span>Tinggi</span>
-
-                    </div>
-
-                    <div class="legend-item">
-                        <span class="legend-swatch">
-                        </span>
-
-                        <span>Sangat Tinggi</span>
                     </div>
                 </div>
+
+
+                <!-- Legend NSB -->
+                <div
+                    id="nsb-legend"
+                    class="legend-content"
+                    hidden
+                >
+                    <h2 class="control-title">
+                        Night Sky Brightness
+                    </h2>
+
+                    <div class="legend-gradient nsb-gradient"></div>
+
+                    <p class="legend-description">
+                        Nilai NSB yang lebih tinggi menunjukkan langit malam
+                        yang lebih terang dan pengaruh polusi cahaya yang lebih besar.
+                    </p>
+
+                </div>
+
             </aside>
 
             <aside
