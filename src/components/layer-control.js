@@ -9,7 +9,7 @@ const LAYER_CONFIG = [
     {
         inputId: "nsb-layer",
         layerIds: [
-            "nsb-placeholder",
+            "nsb-raster",
         ],
     },
     {

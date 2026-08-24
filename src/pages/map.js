@@ -21,7 +21,7 @@ const NSB_RASTER_LAYER_ID = "nsb-raster";
 
 
 const map = new Map({
-    container: "map",
+    container: MAP_CONTAINER_ID,
 
     center: [107.6, -6.9],
     zoom: 9,
@@ -71,6 +71,34 @@ map.on("load", async () => {
             }
         );
 
+        map.addSource(
+            NSB_IMAGE_SOURCE_ID,
+            {
+                type: "image",
+                url: "/data/rasters/orion-nsb-bandung-raya-2024.png",
+                coordinates: [
+                    [107.1788867, -6.6874825],
+                    [107.9413847, -6.6874825],
+                    [107.9413847, -7.3124809],
+                    [107.1788867, -7.3124809],
+                ],
+            }
+        );
+
+        map.addLayer({
+            id: NSB_RASTER_LAYER_ID,
+            type: "raster",
+            source: NSB_IMAGE_SOURCE_ID,
+
+            layout: {
+                visibility: "none",
+            },
+
+            paint: {
+                "raster-opacity": 1,
+            },
+        });
+
 
         map.addLayer({
             id: ORION_FILL_LAYER_ID,
@@ -99,7 +127,7 @@ map.on("load", async () => {
                     "#f0cf7a",
                 ],
 
-                "fill-opacity": 0.65,
+                "fill-opacity": 0.68,
             },
         });
 
@@ -112,82 +140,58 @@ map.on("load", async () => {
             paint: {
                 "line-color": "#ffffff",
                 "line-width": 0.6,
-                "line-opacity": 0.5,
+                "line-opacity": 0.45,
             },
         });
 
-        map.addSource(NSB_IMAGE_SOURCE_ID, {
-
-            type: "image",
-            url: "/data/rasters/orion-nsb-bandung-raya-2024.png",
-            
-            coordinates: [
-            
-            [107.1788867, -6.6874825],
-            
-            [107.9413847, -6.6874825],
-            
-            [107.9413847, -7.3124809],
-            
-            [107.1788867, -7.3124809]
-            
-            ]
-            
-            });
-
-
-            map.addLayer({
-
-                id: NSB_RASTER_LAYER_ID,
-                
-                type: "raster",
-                
-                source: NSB_IMAGE_SOURCE_ID,
-                
-                paint: {
-                
-                "raster-opacity": 0.6
-                
-                }
-                
-                });
-
+        initializeLayerControl(map);
 
         map.on(
-            "click", ORION_FILL_LAYER_ID,
+            "click",
+            ORION_FILL_LAYER_ID,
             (event) => {
-            const feature = event.features?.[0];
+                const feature = event.features?.[0];
 
-            if (!feature) {
-                return;
+                if (!feature) {
+                    return;
+                }
+
+                const popup = createLocationPopup(
+                    event,
+                    feature.properties
+                );
+
+                popup.addTo(map);
+
+                setupPopupDetailButton(
+                    popup,
+                    feature.properties
+                );
             }
-
-            const popup = createLocationPopup(
-                event,
-                feature.properties
-            );
-            
-            popup.addTo(map);        
-        }
-    );
+        );
 
 
         map.on(
             "mouseenter",
-            ORION_FILL_LAYER_ID, () => {
-            map.getCanvas().style.cursor = "pointer";
-        }
-    );
+            ORION_FILL_LAYER_ID,
+            () => {
+                map.getCanvas().classList.add(
+                    "map-canvas--interactive"
+                );
+            }
+        );
 
 
         map.on(
             "mouseleave",
-            ORION_FILL_LAYER_ID, () => {
-            map.getCanvas().style.cursor = "";
-        }
-    );
+            ORION_FILL_LAYER_ID,
+            () => {
+                map.getCanvas().classList.remove(
+                    "map-canvas--interactive"
+                );
+            }
+        );
 
-        initializeLayerControl(map);
 
         initializeLocationSearch(
             map,
@@ -196,55 +200,184 @@ map.on("load", async () => {
 
     } catch (error) {
         console.error(
-            "Gagal menginisialisasi data ORION:",
+            "Failed to initialize ORION map:",
             error
         );
     }
 });
 
+
+function setupPopupDetailButton(
+    popup,
+    properties
+) {
+    popup.on("open", () => {
+        const detail_button =
+            document.querySelector(
+                '[data-action="view-detail"]'
+            );
+
+        if (!detail_button) {
+            return;
+        }
+
+        detail_button.addEventListener(
+            "click",
+            () => {
+                openLocationPanel(
+                    properties
+                );
+
+                popup.remove();
+            }
+        );
+    });
+}
+
+
+function openLocationPanel(properties) {
+    const location_panel =
+        document.getElementById(
+            "location-panel"
+        );
+
+    const location_name =
+        document.getElementById(
+            "location-name"
+        );
+
+    const location_regency =
+        document.getElementById(
+            "location-regency"
+        );
+
+    const orion_score =
+        document.getElementById(
+            "orion-score"
+        );
+
+    const nsb_score =
+        document.getElementById(
+            "nsb-score"
+        );
+
+    const cloud_score =
+        document.getElementById(
+            "cloud-score"
+        );
+
+    const access_score =
+        document.getElementById(
+            "access-score"
+        );
+
+
+    if (!location_panel) {
+        return;
+    }
+
+
+    location_name.textContent =
+        properties.WADMKC ??
+        "Tidak diketahui";
+
+
+    location_regency.textContent =
+        properties.WADMKK ??
+        "Tidak diketahui";
+
+
+    orion_score.textContent =
+        Number(
+            properties.ORION_SCORE ?? 0
+        ).toFixed(2);
+
+
+    nsb_score.textContent =
+        properties.NSB_SCORE ??
+        "-";
+
+
+    cloud_score.textContent =
+        properties.CLOUD_SCORE ??
+        "-";
+
+
+    access_score.textContent =
+        properties.ACCESS_SCORE ??
+        "-";
+
+
+    location_panel.hidden = false;
+}
+
+
+function closeLocationPanel() {
+    const location_panel =
+        document.getElementById(
+            "location-panel"
+        );
+
+    if (!location_panel) {
+        return;
+    }
+
+    location_panel.hidden = true;
+}
+
+
 function initializeLocationSearch(
-    map,
+    map_instance,
     geojson
 ) {
-    const searchInput =
+    const search_input =
         document.getElementById(
             "location-search"
         );
 
-    if (!searchInput) {
+    if (!search_input) {
         return;
     }
 
-    searchInput.addEventListener(
+
+    search_input.addEventListener(
         "change",
         () => {
             const query =
-                searchInput.value
+                search_input.value
                     .trim()
                     .toLowerCase();
+
 
             if (!query) {
                 return;
             }
 
+
             const feature =
                 geojson.features.find(
                     (item) => {
-                        const districtName =
+                        const district_name =
                             String(
-                                item.properties
-                                    ?.WADMKC ?? ""
+                                item.properties?.WADMKC ??
+                                ""
                             ).toLowerCase();
 
-                        const regencyName =
+
+                        const regency_name =
                             String(
-                                item.properties
-                                    ?.WADMKK ?? ""
+                                item.properties?.WADMKK ??
+                                ""
                             ).toLowerCase();
+
 
                         return (
-                            districtName.includes(query) ||
-                            regencyName.includes(query)
+                            district_name.includes(
+                                query
+                            ) ||
+                            regency_name.includes(
+                                query
+                            )
                         );
                     }
                 );
@@ -256,9 +389,12 @@ function initializeLocationSearch(
 
 
             const coordinates =
-                getFeatureCenter(feature);
+                getFeatureCenter(
+                    feature
+                );
 
-            map.flyTo({
+
+            map_instance.flyTo({
                 center: coordinates,
                 zoom: 12,
                 essential: true,
@@ -276,41 +412,45 @@ function getFeatureCenter(feature) {
         coordinates
     );
 
+
     if (!coordinates.length) {
         return [107.6, -6.9];
     }
 
 
-    let minLongitude = Infinity;
-    let maxLongitude = -Infinity;
+    let min_longitude = Infinity;
+    let max_longitude = -Infinity;
 
-    let minLatitude = Infinity;
-    let maxLatitude = -Infinity;
+    let min_latitude = Infinity;
+    let max_latitude = -Infinity;
 
 
     coordinates.forEach(
         ([longitude, latitude]) => {
-            minLongitude =
+            min_longitude =
                 Math.min(
-                    minLongitude,
+                    min_longitude,
                     longitude
                 );
 
-            maxLongitude =
+
+            max_longitude =
                 Math.max(
-                    maxLongitude,
+                    max_longitude,
                     longitude
                 );
 
-            minLatitude =
+
+            min_latitude =
                 Math.min(
-                    minLatitude,
+                    min_latitude,
                     latitude
                 );
 
-            maxLatitude =
+
+            max_latitude =
                 Math.max(
-                    maxLatitude,
+                    max_latitude,
                     latitude
                 );
         }
@@ -318,8 +458,11 @@ function getFeatureCenter(feature) {
 
 
     return [
-        (minLongitude + maxLongitude) / 2,
-        (minLatitude + maxLatitude) / 2,
+        (min_longitude + max_longitude) /
+            2,
+
+        (min_latitude + max_latitude) /
+            2,
     ];
 }
 
@@ -368,4 +511,17 @@ function collectCoordinates(
             }
         );
     }
+}
+
+
+const close_panel_button =
+    document.getElementById(
+        "close-location-panel"
+    );
+
+if (close_panel_button) {
+    close_panel_button.addEventListener(
+        "click",
+        closeLocationPanel
+    );
 }

@@ -66,6 +66,14 @@ export function createLocationPopup(event, properties) {
 
                 </div>
 
+                <button
+                    type="button"
+                    class="popup-detail-button"
+                    data-action="view-detail"
+                >
+                    Lihat Detail
+                </button>
+
             </div>
         `);
 
