@@ -1,0 +1,497 @@
+/* ========================================
+   ABOUT PAGE
+   ======================================== */
+
+   .profile-section {
+    min-height: 78vh;
+
+    display: flex;
+    align-items: center;
+
+    padding: 120px 0 90px;
+}
+
+.profile-content {
+    width: min(1100px, 90%);
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns: 280px 1fr;
+
+    align-items: center;
+
+    gap: 70px;
+}
+
+
+/* ========================================
+   PROFILE IMAGE
+   ======================================== */
+
+.profile-image {
+    width: 260px;
+    height: 260px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(240, 207, 122, 0.45);
+
+    box-shadow:
+        0 0 40px rgba(240, 207, 122, 0.08);
+
+    display: block;
+
+    margin: 0 auto;
+}
+
+
+/* ========================================
+   PROFILE INFORMATION
+   ======================================== */
+
+.profile-information {
+    max-width: 720px;
+}
+
+.profile-information .section-eyebrow {
+    margin-bottom: 12px;
+}
+
+.profile-name {
+    margin: 0;
+
+    font-size: clamp(3rem, 6vw, 5.5rem);
+
+    line-height: 0.95;
+
+    font-weight: 400;
+
+    letter-spacing: -0.04em;
+
+    color: #ffffff;
+}
+
+.profile-role {
+    margin: 22px 0 0;
+
+    font-size: 1rem;
+
+    letter-spacing: 0.05em;
+
+    color: #f0cf7a;
+
+    opacity: 0.9;
+}
+
+.profile-description {
+    max-width: 680px;
+
+    margin: 25px 0 0;
+
+    font-size: 1rem;
+
+    line-height: 1.85;
+
+    color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* ========================================
+   GENERAL SECTION
+   ======================================== */
+
+.section-container {
+    width: min(1100px, 90%);
+
+    margin: 0 auto;
+}
+
+.about-section,
+.skills-section,
+.experience-section,
+.contact-section {
+    padding: 90px 0;
+}
+
+.about-section,
+.skills-section,
+.experience-section,
+.contact-section {
+    border-top:
+        1px solid rgba(255, 255, 255, 0.06);
+}
+
+.section-eyebrow {
+    margin: 0 0 12px;
+
+    font-size: 0.72rem;
+
+    font-weight: 500;
+
+    letter-spacing: 0.18em;
+
+    text-transform: uppercase;
+
+    color: #f0cf7a;
+
+    opacity: 0.8;
+}
+
+.about-section h2,
+.skills-section h2,
+.experience-section h2,
+.contact-section h2 {
+    margin: 0;
+
+    font-size: clamp(2rem, 4vw, 3rem);
+
+    line-height: 1.1;
+
+    font-weight: 400;
+
+    letter-spacing: -0.025em;
+
+    color: #ffffff;
+}
+
+.section-description {
+    max-width: 760px;
+
+    margin: 22px 0 0;
+
+    font-size: 0.98rem;
+
+    line-height: 1.8;
+
+    color: rgba(255, 255, 255, 0.68);
+}
+
+
+/* ========================================
+   SKILLS
+   ======================================== */
+
+.skills-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-top: 45px;
+}
+
+.skill-card {
+    min-height: 190px;
+
+    padding: 28px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+
+    border-color:
+        rgba(240, 207, 122, 0.35);
+
+    background:
+        rgba(240, 207, 122, 0.025);
+}
+
+.skill-card h3 {
+    margin: 0 0 15px;
+
+    font-size: 1rem;
+
+    font-weight: 500;
+
+    color: #ffffff;
+}
+
+.skill-card p {
+    margin: 0;
+
+    font-size: 0.88rem;
+
+    line-height: 1.7;
+
+    color: rgba(255, 255, 255, 0.58);
+}
+
+
+/* ========================================
+   PROFESSIONAL EXPERIENCE
+   ======================================== */
+
+.experience-list {
+    margin-top: 45px;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.08);
+}
+
+.experience-item {
+    display: grid;
+
+    grid-template-columns: 120px 1fr;
+
+    gap: 35px;
+
+    padding: 25px 0;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    transition:
+        background 0.2s ease;
+}
+
+.experience-item:hover {
+    background:
+        rgba(255, 255, 255, 0.018);
+}
+
+.experience-year {
+    padding-top: 3px;
+
+    font-size: 0.82rem;
+
+    letter-spacing: 0.08em;
+
+    color: #f0cf7a;
+
+    opacity: 0.85;
+}
+
+.experience-content h3 {
+    margin: 0;
+
+    font-size: 1rem;
+
+    font-weight: 500;
+
+    line-height: 1.5;
+
+    color: #ffffff;
+}
+
+.experience-content p {
+    margin: 7px 0 0;
+
+    font-size: 0.86rem;
+
+    line-height: 1.6;
+
+    color: rgba(255, 255, 255, 0.55);
+}
+
+
+/* ========================================
+   CONTACT
+   ======================================== */
+
+.contact-links {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 28px;
+}
+
+.contact-link {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 11px 20px;
+
+    border:
+        1px solid rgba(240, 207, 122, 0.35);
+
+    border-radius: 5px;
+
+    color: #f0cf7a;
+
+    text-decoration: none;
+
+    font-size: 0.82rem;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.contact-link:hover {
+    background: #f0cf7a;
+
+    color: #07152b;
+
+    border-color: #f0cf7a;
+}
+
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.site-footer {
+    border-top:
+        1px solid rgba(255, 255, 255, 0.06);
+
+    padding: 55px 0 40px;
+}
+
+.footer-content {
+    width: min(1100px, 90%);
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.footer-logo {
+    width: 70px;
+
+    height: auto;
+
+    margin-bottom: 20px;
+}
+
+.footer-tagline {
+    margin: 0;
+
+    font-size: 0.8rem;
+
+    color: #f0cf7a;
+
+    letter-spacing: 0.05em;
+}
+
+.footer-description {
+    margin: 12px 0 0;
+
+    font-size: 0.78rem;
+
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.copyright {
+    margin: 20px 0 0;
+
+    font-size: 0.7rem;
+
+    color: rgba(255, 255, 255, 0.3);
+}
+
+
+/* ========================================
+   TABLET
+   ======================================== */
+
+@media (max-width: 900px) {
+
+    .profile-content {
+        grid-template-columns: 220px 1fr;
+
+        gap: 45px;
+    }
+
+    .profile-image {
+        width: 210px;
+        height: 210px;
+    }
+
+    .skills-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+/* ========================================
+   MOBILE
+   ======================================== */
+
+@media (max-width: 650px) {
+
+    .profile-section {
+        min-height: auto;
+
+        padding: 100px 0 70px;
+    }
+
+    .profile-content {
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+
+        text-align: center;
+    }
+
+    .profile-image {
+        width: 190px;
+        height: 190px;
+    }
+
+    .profile-information {
+        max-width: 100%;
+    }
+
+    .profile-description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .about-section,
+    .skills-section,
+    .experience-section,
+    .contact-section {
+        padding: 65px 0;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+    }
+
+    .skill-card {
+        min-height: auto;
+    }
+
+    .experience-item {
+        grid-template-columns: 1fr;
+
+        gap: 8px;
+
+        padding: 22px 0;
+    }
+
+    .contact-links {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+}

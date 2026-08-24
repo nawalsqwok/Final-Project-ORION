@@ -60,6 +60,12 @@ map.on("load", async () => {
     try {
         const geojson = await getOrionDistricts();
 
+        const sukasari = geojson.features.find(
+            feature => feature.properties?.WADMKC === "Sukasari"
+            );
+
+            console.log("SUKASARI DATA:", sukasari?.properties);
+
         map.addSource(GEOJSON_SOURCE_ID, {
             type: "geojson",
             data: geojson,
@@ -101,7 +107,7 @@ map.on("load", async () => {
                     ["linear"],
                     [
                         "coalesce",
-                        ["get", "ORION_SCORE"],
+                        ["get", "orion_score"],
                         0,
                     ],
 
@@ -110,6 +116,9 @@ map.on("load", async () => {
 
                     40,
                     "#174a63",
+
+                    45,
+                    "#2f7f72",
 
                     50,
                     "#2f7f72",
@@ -163,6 +172,12 @@ map.on("load", async () => {
             (event) => {
                 const feature = event.features?.[0];
 
+                console.log("FEATURE DIKLIK:", feature);
+
+                console.log("PROPERTIES:", feature?.properties);
+
+                console.log("FEATURE DIKLIK:", feature);
+
                 if (!feature) {
                     return;
                 }
@@ -172,7 +187,11 @@ map.on("load", async () => {
                     feature.properties
                 );
 
+                console.log("MEMBUAT POPUP:", popup);
+
                 popup.addTo(map);
+
+                console.log("POPUP BERHASIL DITAMBAHKAN");
 
                 setupPopupDetailButton(
                     popup,
@@ -301,28 +320,28 @@ function openLocationPanel(properties) {
     if (orionScore) {
         orionScore.textContent =
             formatScore(
-                properties.ORION_SCORE
+                properties.orion_score
             );
     }
 
     if (nsbScore) {
         nsbScore.textContent =
             formatMetric(
-                properties.NSB_SCORE
+                properties.nsb_nsb_score
             );
     }
 
     if (cloudScore) {
         cloudScore.textContent =
             formatMetric(
-                properties.CLOUD_SCORE
+                properties.cloud_cloud_score
             );
     }
 
     if (accessScore) {
         accessScore.textContent =
             formatMetric(
-                properties.ACCESS_SCORE
+                properties.access_score
             );
     }
 

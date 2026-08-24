@@ -1,4 +1,4 @@
-const GEOJSON_PATH = "/data/geojson/orion_bandung_raya.geojson";
+const GEOJSON_PATH = "public/data/geojson/orion_bandung_raya.geojson";
 
 export async function getOrionDistricts() {
     const response = await fetch(GEOJSON_PATH);

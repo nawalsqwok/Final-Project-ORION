@@ -8,16 +8,16 @@ export function createLocationPopup(event, properties) {
         properties.WADMKK ?? "Tidak diketahui";
 
     const orionScore =
-        Number(properties.ORION_SCORE ?? 0).toFixed(2);
+        Number(properties.orion_score ?? 0).toFixed(2);
 
     const nsbScore =
-        properties.NSB_SCORE ?? "-";
+        properties.nsb_nsb_score ?? "-";
 
     const cloudScore =
-        properties.CLOUD_SCORE ?? "-";
+        properties.cloud_cloud_score ?? "-";
 
     const accessScore =
-        properties.ACCESS_SCORE ?? "-";
+        properties.access_score ?? "-";
 
     const popup = new Popup({
         closeButton: true,

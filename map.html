@@ -90,7 +90,7 @@
 
             <div class="map-search">
                 <label for="location-search" class="visually-hidden">Cari Lokasi</label>
-                
+
                 <input
                     type="search"
                     id="location-search"
@@ -142,7 +142,7 @@
 
                  <!-- Tuttupan awan-->
 
-                 <label class="layer-option">
+                 <!-- <label class="layer-option">
 
                     <input
                         type="checkbox"
@@ -151,11 +151,11 @@
                     <span>
                         Tutupan Awan
                     </span>
-                 </label>
+                 </label> -->
 
                  <!-- aksesibilitas-->
 
-                 <label class="layer-option">
+                 <!-- <label class="layer-option">
 
                     <input
                         type="checkbox"
@@ -165,10 +165,10 @@
                         Aksesibilitas
                     </span>
 
-                 </label>
+                 </label> -->
 
                  <!-- Lokasi pariwisata -->
-                  <label class="layer-option">
+                  <!-- <label class="layer-option">
                     <input
                         type="checkbox"
                         id="tourism-layer">
@@ -177,7 +177,7 @@
                         Lokasi Wisata
                     </span>
 
-                  </label>
+                  </label> -->
             </aside>
 
             <!-- legenda petanya -->
@@ -188,24 +188,36 @@
             >
 
                 <!-- Legend ORION Score -->
-                <div
-                    id="orion-legend"
-                    class="legend-content"
-                >
+                <div id="orion-legend" class="legend-content">
+
                     <h2 class="control-title">
                         ORION Score
                     </h2>
-
+            
                     <div class="legend-scale">
-
-                        <div class="legend-gradient orion-gradient"></div>
-
-                        <div class="legend-range">
+            
+                        <div class="legend-item">
+                            <span class="legend-swatch legend-low"></span>
                             <span>Rendah</span>
+                        </div>
+            
+                        <div class="legend-item">
+                            <span class="legend-swatch legend-medium"></span>
+                            <span>Sedang</span>
+                        </div>
+            
+                        <div class="legend-item">
+                            <span class="legend-swatch legend-high"></span>
                             <span>Tinggi</span>
                         </div>
-
+            
+                        <div class="legend-item">
+                            <span class="legend-swatch legend-very-high"></span>
+                            <span>Sangat Tinggi</span>
+                        </div>
+            
                     </div>
+            
                 </div>
 
 
