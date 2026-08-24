@@ -119,7 +119,9 @@ map.on("load", async () => {
         });
 
 
-        map.on("click", ORION_FILL_LAYER_ID, (event) => {
+        map.on(
+            "click", ORION_FILL_LAYER_ID,
+            (event) => {
             const feature = event.features?.[0];
 
             if (!feature) {
@@ -136,14 +138,20 @@ map.on("load", async () => {
     );
 
 
-        map.on("mouseenter", ORION_FILL_LAYER_ID, () => {
+        map.on(
+            "mouseenter",
+            ORION_FILL_LAYER_ID, () => {
             map.getCanvas().style.cursor = "pointer";
-        });
+        }
+    );
 
 
-        map.on("mouseleave", ORION_FILL_LAYER_ID, () => {
+        map.on(
+            "mouseleave",
+            ORION_FILL_LAYER_ID, () => {
             map.getCanvas().style.cursor = "";
-        });
+        }
+    );
 
         initializeLayerControl(map);
 
