@@ -90,12 +90,19 @@
 
             <div class="map-search">
                 <label for="location-search" class="visually-hidden">Cari Lokasi</label>
+                
                 <input
                     type="search"
                     id="location-search"
                     class="search-input"
-                    placeholder="Cari kecamatan . . ."
+                    placeholder="Cari kecamatan...."
                     autocomplete="off">
+
+                    <div
+                    id="location-suggestions"
+                    class="location-suggestions"
+                    hidden>
+                </div>
             </div>
 
             <!-- buat layer controlnya -->

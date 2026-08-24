@@ -9,24 +9,25 @@ import { getOrionDistricts } from "../api/orion-data.js";
 import { createLocationPopup } from "../components/location-popup.js";
 import { initializeLayerControl } from "../components/layer-control.js";
 
-
 const MAP_CONTAINER_ID = "map";
 
 const GEOJSON_SOURCE_ID = "orion-districts";
 
 const ORION_FILL_LAYER_ID = "orion-district-fill";
 const ORION_LINE_LAYER_ID = "orion-district-line";
+const ORION_HIGHLIGHT_LAYER_ID = "orion-district-highlight";
+
 const NSB_IMAGE_SOURCE_ID = "nsb-image";
 const NSB_RASTER_LAYER_ID = "nsb-raster";
-
 
 const map = new Map({
     container: MAP_CONTAINER_ID,
 
     center: [107.6, -6.9],
+
     zoom: 9,
 
-    style: { 
+    style: {
         version: 8,
 
         sources: {
@@ -36,8 +37,7 @@ const map = new Map({
                     "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 ],
                 tileSize: 256,
-                attribution:
-                    '&copy; OpenStreetMap contributors',
+                attribution: "&copy; OpenStreetMap contributors",
             },
         },
 
@@ -51,39 +51,30 @@ const map = new Map({
     },
 });
 
-
 map.addControl(
     new NavigationControl(),
     "top-right"
 );
 
-
 map.on("load", async () => {
     try {
         const geojson = await getOrionDistricts();
 
+        map.addSource(GEOJSON_SOURCE_ID, {
+            type: "geojson",
+            data: geojson,
+        });
 
-        map.addSource(
-            GEOJSON_SOURCE_ID,
-            {
-                type: "geojson",
-                data: geojson,
-            }
-        );
-
-        map.addSource(
-            NSB_IMAGE_SOURCE_ID,
-            {
-                type: "image",
-                url: "/data/rasters/orion-nsb-bandung-raya-2024.png",
-                coordinates: [
-                    [107.1788867, -6.6874825],
-                    [107.9413847, -6.6874825],
-                    [107.9413847, -7.3124809],
-                    [107.1788867, -7.3124809],
-                ],
-            }
-        );
+        map.addSource(NSB_IMAGE_SOURCE_ID, {
+            type: "image",
+            url: "/data/rasters/orion-nsb-bandung-raya-2024.png",
+            coordinates: [
+                [107.1788867, -6.6874825],
+                [107.9413847, -6.6874825],
+                [107.9413847, -7.3124809],
+                [107.1788867, -7.3124809],
+            ],
+        });
 
         map.addLayer({
             id: NSB_RASTER_LAYER_ID,
@@ -99,7 +90,6 @@ map.on("load", async () => {
             },
         });
 
-
         map.addLayer({
             id: ORION_FILL_LAYER_ID,
             type: "fill",
@@ -109,10 +99,14 @@ map.on("load", async () => {
                 "fill-color": [
                     "interpolate",
                     ["linear"],
-                    ["get", "ORION_SCORE"],
+                    [
+                        "coalesce",
+                        ["get", "ORION_SCORE"],
+                        0,
+                    ],
 
                     30,
-                    "#0b1f3a",
+                    "#07152b",
 
                     40,
                     "#174a63",
@@ -131,7 +125,6 @@ map.on("load", async () => {
             },
         });
 
-
         map.addLayer({
             id: ORION_LINE_LAYER_ID,
             type: "line",
@@ -141,6 +134,24 @@ map.on("load", async () => {
                 "line-color": "#ffffff",
                 "line-width": 0.6,
                 "line-opacity": 0.45,
+            },
+        });
+
+        map.addLayer({
+            id: ORION_HIGHLIGHT_LAYER_ID,
+            type: "line",
+            source: GEOJSON_SOURCE_ID,
+
+            filter: [
+                "==",
+                ["get", "WADMKC"],
+                "",
+            ],
+
+            paint: {
+                "line-color": "#f0cf7a",
+                "line-width": 4,
+                "line-opacity": 1,
             },
         });
 
@@ -167,9 +178,13 @@ map.on("load", async () => {
                     popup,
                     feature.properties
                 );
+
+                highlightDistrict(
+                    map,
+                    feature.properties?.WADMKC
+                );
             }
         );
-
 
         map.on(
             "mouseenter",
@@ -181,7 +196,6 @@ map.on("load", async () => {
             }
         );
 
-
         map.on(
             "mouseleave",
             ORION_FILL_LAYER_ID,
@@ -192,11 +206,12 @@ map.on("load", async () => {
             }
         );
 
-
         initializeLocationSearch(
             map,
             geojson
         );
+
+        initializeLocationPanelClose();
 
     } catch (error) {
         console.error(
@@ -206,27 +221,24 @@ map.on("load", async () => {
     }
 });
 
-
 function setupPopupDetailButton(
     popup,
     properties
 ) {
     popup.on("open", () => {
-        const detail_button =
+        const detailButton =
             document.querySelector(
                 '[data-action="view-detail"]'
             );
 
-        if (!detail_button) {
+        if (!detailButton) {
             return;
         }
 
-        detail_button.addEventListener(
+        detailButton.addEventListener(
             "click",
             () => {
-                openLocationPanel(
-                    properties
-                );
+                openLocationPanel(properties);
 
                 popup.remove();
             }
@@ -234,175 +246,347 @@ function setupPopupDetailButton(
     });
 }
 
-
 function openLocationPanel(properties) {
-    const location_panel =
+    const locationPanel =
         document.getElementById(
             "location-panel"
         );
 
-    const location_name =
+    const locationName =
         document.getElementById(
             "location-name"
         );
 
-    const location_regency =
+    const locationRegency =
         document.getElementById(
             "location-regency"
         );
 
-    const orion_score =
+    const orionScore =
         document.getElementById(
             "orion-score"
         );
 
-    const nsb_score =
+    const nsbScore =
         document.getElementById(
             "nsb-score"
         );
 
-    const cloud_score =
+    const cloudScore =
         document.getElementById(
             "cloud-score"
         );
 
-    const access_score =
+    const accessScore =
         document.getElementById(
             "access-score"
         );
 
-
-    if (!location_panel) {
+    if (!locationPanel) {
         return;
     }
 
+    if (locationName) {
+        locationName.textContent =
+            properties.WADMKC ??
+            "Tidak diketahui";
+    }
 
-    location_name.textContent =
-        properties.WADMKC ??
-        "Tidak diketahui";
+    if (locationRegency) {
+        locationRegency.textContent =
+            properties.WADMKK ??
+            "Tidak diketahui";
+    }
 
+    if (orionScore) {
+        orionScore.textContent =
+            formatScore(
+                properties.ORION_SCORE
+            );
+    }
 
-    location_regency.textContent =
-        properties.WADMKK ??
-        "Tidak diketahui";
+    if (nsbScore) {
+        nsbScore.textContent =
+            formatMetric(
+                properties.NSB_SCORE
+            );
+    }
 
+    if (cloudScore) {
+        cloudScore.textContent =
+            formatMetric(
+                properties.CLOUD_SCORE
+            );
+    }
 
-    orion_score.textContent =
-        Number(
-            properties.ORION_SCORE ?? 0
-        ).toFixed(2);
+    if (accessScore) {
+        accessScore.textContent =
+            formatMetric(
+                properties.ACCESS_SCORE
+            );
+    }
 
-
-    nsb_score.textContent =
-        properties.NSB_SCORE ??
-        "-";
-
-
-    cloud_score.textContent =
-        properties.CLOUD_SCORE ??
-        "-";
-
-
-    access_score.textContent =
-        properties.ACCESS_SCORE ??
-        "-";
-
-
-    location_panel.hidden = false;
+    locationPanel.hidden = false;
 }
 
-
-function closeLocationPanel() {
-    const location_panel =
+function initializeLocationPanelClose() {
+    const closePanelButton =
         document.getElementById(
-            "location-panel"
+            "close-location-panel"
         );
 
-    if (!location_panel) {
+    if (!closePanelButton) {
         return;
     }
 
-    location_panel.hidden = true;
-}
-
-
-function initializeLocationSearch(
-    map_instance,
-    geojson
-) {
-    const search_input =
-        document.getElementById(
-            "location-search"
-        );
-
-    if (!search_input) {
-        return;
-    }
-
-
-    search_input.addEventListener(
-        "change",
+    closePanelButton.addEventListener(
+        "click",
         () => {
-            const query =
-                search_input.value
-                    .trim()
-                    .toLowerCase();
-
-
-            if (!query) {
-                return;
-            }
-
-
-            const feature =
-                geojson.features.find(
-                    (item) => {
-                        const district_name =
-                            String(
-                                item.properties?.WADMKC ??
-                                ""
-                            ).toLowerCase();
-
-
-                        const regency_name =
-                            String(
-                                item.properties?.WADMKK ??
-                                ""
-                            ).toLowerCase();
-
-
-                        return (
-                            district_name.includes(
-                                query
-                            ) ||
-                            regency_name.includes(
-                                query
-                            )
-                        );
-                    }
-                );
-
-
-            if (!feature) {
-                return;
-            }
-
-
-            const coordinates =
-                getFeatureCenter(
-                    feature
-                );
-
-
-            map_instance.flyTo({
-                center: coordinates,
-                zoom: 12,
-                essential: true,
-            });
+            closeLocationPanel();
         }
     );
 }
 
+function closeLocationPanel() {
+    const locationPanel =
+        document.getElementById(
+            "location-panel"
+        );
+
+    if (!locationPanel) {
+        return;
+    }
+
+    locationPanel.hidden = true;
+
+    clearDistrictHighlight(map);
+}
+
+function initializeLocationSearch(
+    mapInstance,
+    geojson
+) {
+    const searchInput =
+        document.getElementById(
+            "location-search"
+        );
+
+    const suggestionsContainer =
+        document.getElementById(
+            "location-suggestions"
+        );
+
+    if (
+        !searchInput ||
+        !suggestionsContainer
+    ) {
+        return;
+    }
+
+    const districts = [
+        ...new Set(
+            geojson.features
+                .map(
+                    (feature) =>
+                        feature.properties?.WADMKC
+                )
+                .filter(Boolean)
+        ),
+    ].sort(
+        (firstName, secondName) =>
+            firstName.localeCompare(
+                secondName,
+                "id"
+            )
+    );
+
+    function renderSuggestions(
+        query = ""
+    ) {
+        const normalizedQuery =
+            query
+                .trim()
+                .toLowerCase();
+
+        const filteredDistricts =
+            districts.filter(
+                (districtName) =>
+                    districtName
+                        .toLowerCase()
+                        .includes(
+                            normalizedQuery
+                        )
+            );
+
+        suggestionsContainer.innerHTML = "";
+
+        if (
+            filteredDistricts.length === 0
+        ) {
+            suggestionsContainer.hidden = true;
+            return;
+        }
+
+        filteredDistricts.forEach(
+            (districtName) => {
+                const suggestion =
+                    document.createElement(
+                        "button"
+                    );
+
+                suggestion.type = "button";
+
+                suggestion.classList.add(
+                    "location-suggestion"
+                );
+
+                suggestion.textContent =
+                    districtName;
+
+                suggestion.addEventListener(
+                    "click",
+                    () => {
+                        selectDistrict(
+                            districtName
+                        );
+                    }
+                );
+
+                suggestionsContainer.appendChild(
+                    suggestion
+                );
+            }
+        );
+
+        suggestionsContainer.hidden = false;
+    }
+
+    function selectDistrict(
+        districtName
+    ) {
+        const feature =
+            geojson.features.find(
+                (item) =>
+                    item.properties
+                        ?.WADMKC ===
+                    districtName
+            );
+
+        if (!feature) {
+            return;
+        }
+
+        searchInput.value =
+            districtName;
+
+        suggestionsContainer.hidden = true;
+
+        highlightDistrict(
+            mapInstance,
+            districtName
+        );
+
+        const coordinates =
+            getFeatureCenter(
+                feature
+            );
+
+        mapInstance.flyTo({
+            center: coordinates,
+            zoom: 12,
+            essential: true,
+        });
+    }
+
+    searchInput.addEventListener(
+        "focus",
+        () => {
+            renderSuggestions(
+                searchInput.value
+            );
+        }
+    );
+
+    searchInput.addEventListener(
+        "input",
+        () => {
+            renderSuggestions(
+                searchInput.value
+            );
+        }
+    );
+
+    document.addEventListener(
+        "click",
+        (event) => {
+            const searchContainer =
+                document.querySelector(
+                    ".map-search"
+                );
+
+            if (
+                searchContainer &&
+                !searchContainer.contains(
+                    event.target
+                )
+            ) {
+                suggestionsContainer.hidden =
+                    true;
+            }
+        }
+    );
+}
+
+function highlightDistrict(
+    mapInstance,
+    districtName
+) {
+    if (
+        !mapInstance.getLayer(
+            ORION_HIGHLIGHT_LAYER_ID
+        )
+    ) {
+        return;
+    }
+
+    if (!districtName) {
+        clearDistrictHighlight(
+            mapInstance
+        );
+
+        return;
+    }
+
+    mapInstance.setFilter(
+        ORION_HIGHLIGHT_LAYER_ID,
+        [
+            "==",
+            ["get", "WADMKC"],
+            districtName,
+        ]
+    );
+}
+
+function clearDistrictHighlight(
+    mapInstance
+) {
+    if (
+        !mapInstance.getLayer(
+            ORION_HIGHLIGHT_LAYER_ID
+        )
+    ) {
+        return;
+    }
+
+    mapInstance.setFilter(
+        ORION_HIGHLIGHT_LAYER_ID,
+        [
+            "==",
+            ["get", "WADMKC"],
+            "",
+        ]
+    );
+}
 
 function getFeatureCenter(feature) {
     const coordinates = [];
@@ -412,65 +596,61 @@ function getFeatureCenter(feature) {
         coordinates
     );
 
-
     if (!coordinates.length) {
         return [107.6, -6.9];
     }
 
+    let minLongitude = Infinity;
+    let maxLongitude = -Infinity;
 
-    let min_longitude = Infinity;
-    let max_longitude = -Infinity;
-
-    let min_latitude = Infinity;
-    let max_latitude = -Infinity;
-
+    let minLatitude = Infinity;
+    let maxLatitude = -Infinity;
 
     coordinates.forEach(
         ([longitude, latitude]) => {
-            min_longitude =
+            minLongitude =
                 Math.min(
-                    min_longitude,
+                    minLongitude,
                     longitude
                 );
 
-
-            max_longitude =
+            maxLongitude =
                 Math.max(
-                    max_longitude,
+                    maxLongitude,
                     longitude
                 );
 
-
-            min_latitude =
+            minLatitude =
                 Math.min(
-                    min_latitude,
+                    minLatitude,
                     latitude
                 );
 
-
-            max_latitude =
+            maxLatitude =
                 Math.max(
-                    max_latitude,
+                    maxLatitude,
                     latitude
                 );
         }
     );
 
-
     return [
-        (min_longitude + max_longitude) /
-            2,
-
-        (min_latitude + max_latitude) /
-            2,
+        (minLongitude + maxLongitude) / 2,
+        (minLatitude + maxLatitude) / 2,
     ];
 }
-
 
 function collectCoordinates(
     geometry,
     output
 ) {
+    if (
+        !geometry ||
+        !geometry.type
+    ) {
+        return;
+    }
+
     if (
         geometry.type ===
         "Polygon"
@@ -489,7 +669,6 @@ function collectCoordinates(
 
         return;
     }
-
 
     if (
         geometry.type ===
@@ -513,15 +692,29 @@ function collectCoordinates(
     }
 }
 
+function formatScore(value) {
+    const numericValue =
+        Number(value);
 
-const close_panel_button =
-    document.getElementById(
-        "close-location-panel"
-    );
+    if (
+        !Number.isFinite(
+            numericValue
+        )
+    ) {
+        return "-";
+    }
 
-if (close_panel_button) {
-    close_panel_button.addEventListener(
-        "click",
-        closeLocationPanel
-    );
+    return numericValue.toFixed(2);
+}
+
+function formatMetric(value) {
+    if (
+        value === null ||
+        value === undefined ||
+        value === ""
+    ) {
+        return "-";
+    }
+
+    return String(value);
 }
