@@ -42,6 +42,28 @@ export function initializeLayerControl(map) {
             return;
         }
 
+        const visibility = input.checked ? "visible" : "none";
+
+        config.layerIds.forEach((layerId) => {
+
+            if (!map.getLayer(layerId)) {
+            
+            return;
+            
+            }
+            
+            map.setLayoutProperty(
+            
+            layerId,
+            
+            "visibility",
+            
+            visibility
+            
+            );
+            
+            });
+
         input.addEventListener(
             "change", () => {
             const visibility = input.checked ? "visible" : "none";
