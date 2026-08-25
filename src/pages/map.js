@@ -71,16 +71,6 @@ map.on("load", async () => {
         map.addSource(GEOJSON_SOURCE_ID, {
             type: "geojson",
             data: geojson,
-            buffer: 64,
-            tolerance: 1,
-            maxzoom: 12
-        });
-
-        map.once("idle", () => {
-            console.log(
-                "ORION SOURCE LOADED:",
-                map.isSourceLoaded(GEOJSON_SOURCE_ID)
-            );
         });
 
         map.addSource(NSB_IMAGE_SOURCE_ID, {
