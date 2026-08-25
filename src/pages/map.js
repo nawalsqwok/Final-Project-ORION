@@ -71,6 +71,8 @@ map.on("load", async () => {
         map.addSource(GEOJSON_SOURCE_ID, {
             type: "geojson",
             data: geojson,
+            buffer: 128,
+            tolerance: 0.375,
         });
 
         map.addSource(NSB_IMAGE_SOURCE_ID, {
