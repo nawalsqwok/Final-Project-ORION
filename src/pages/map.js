@@ -32,28 +32,7 @@ const map = new Map({
 
     zoom: 9,
 
-    style: {
-        version: 8,
-
-        sources: {
-            "osm-raster": {
-                type: "raster",
-                tiles: [
-                    "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                ],
-                tileSize: 256,
-                attribution: "&copy; OpenStreetMap contributors",
-            },
-        },
-
-        layers: [
-            {
-                id: "osm-basemap",
-                type: "raster",
-                source: "osm-raster",
-            },
-        ],
-    },
+    style: "https://basemap.mapid.io/styles/dark/style.json?key=6a901d7853df37905b3a5ca2",
 });
 
 window.orionMap = map;
